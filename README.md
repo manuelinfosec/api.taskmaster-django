@@ -1,0 +1,1 @@
+- Application relies on expiration of JWT tokens for logout.
