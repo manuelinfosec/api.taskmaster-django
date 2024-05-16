@@ -64,11 +64,12 @@ Accessing user profile
 **Request Example:**
 ```
 GET api/v1/auth/profile/
+
+Headers:
+Authorization: Bearer <token>
 ```
 
 ```json
-Headers:
-Authorization: Bearer <token>
 ```
 
 **Response Example:**
@@ -82,11 +83,11 @@ Updating user profile
 **Request Example:**
 ```
 PUT api/v1/auth/profile/
+Headers:
+Authorization: Bearer <token>
 ```
 
 ```json
-Headers:
-Authorization: Bearer <token>
 
 {
     "first_name": "Chiemezie",
@@ -111,11 +112,11 @@ Updating user password
 **Request Example:**
 ```
 POST api/v1/auth/profile/password/
+Headers:
+Authorization: Bearer <token>
 ```
 
 ```json
-Headers:
-Authorization: Bearer <token>
 
 {
     "old_password": "securepassword123()",
