@@ -1,3 +1,5 @@
+"""Project-wide helper module"""
+
 import uuid
 from typing import Type
 
@@ -11,11 +13,27 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class BaseModel(models.Model):
+    """
+    An abstract base model that provides UUID primary key, and timestamp fields for creation and last update.
+
+    Attributes:
+        id (UUIDField): The primary key for the model, automatically generated as a UUID.
+        date_created (DateTimeField): The date and time when the model instance was created.
+        last_updated (DateTimeField): The date and time when the model instance was last updated.
+
+    This model will be inherited by other models in the project to include common fields and functionality.
+    """
+
     id = models.UUIDField(primary_key=True, unique=True, default=uuid.uuid4)
     date_created = models.DateTimeField(auto_now_add=True)
     last_updated = models.DateTimeField(auto_now=True)
 
     class Meta:
+        """
+        Meta:
+            - abstract (bool): Indicates that this model is an abstract base class and should not be used to create any database table.
+        """
+
         abstract = True
 
 
@@ -26,20 +44,43 @@ def paginate_queryset(
     page: int,
     page_size: int = 10,
 ) -> Response:
+    """
+    Paginate a queryset and serialize the paginated data.
+
+    Args:
+        request: The HTTP request object, used to build URLs.
+        queryset: The queryset to paginate.
+        serializer_class (Type[Serializer]): The serializer class used to serialize the queryset data.
+        page (int): The page number to retrieve.
+        page_size (int, optional): The number of items per page. Defaults to 10.
+
+    Returns:
+        Response: A DRF Response object containing the paginated and serialized data.
+
+    Raises:
+        Http404: If the requested page does not exist.
+    """
+
     # Handle the 'page' parameter with a default value of 1
     try:
         page_number = int(page)
     except (TypeError, ValueError):
         page_number = 1
-    paginator = Paginator(queryset, page_size)  # Set page_size per page here
+
+    # Create a paginator instance with the provided page_size
+    paginator = Paginator(queryset, page_size)
 
     try:
+        # Get the paginated data for the requested page
         paginated_data = paginator.page(page_number)
     except EmptyPage:
+        # Raise a 404 error if the requested page is empty
         raise Http404("No items found on this page")
 
+    # Serialize the paginated data
     serializer = serializer_class(paginated_data, many=True).data
 
+    # Determine the next page URL if there is a next page
     next_page_number = (
         paginated_data.next_page_number() if paginated_data.has_next() else None
     )
@@ -50,6 +91,7 @@ def paginate_queryset(
     else:
         full_next_url = None
 
+    # Determine the previous page URL if there is a previous page
     prev_page_number = (
         paginated_data.previous_page_number() if paginated_data.has_previous() else None
     )
@@ -62,12 +104,13 @@ def paginate_queryset(
 
     # Include "next" and "previous" URLs at the top of the serialized data
     serializer_data = {
-        "count": len(queryset),
-        "previous": full_prev_url,
-        "next": full_next_url,
-        "results": serializer,
+        "count": len(queryset),  # Total number of items in the queryset
+        "previous": full_prev_url,  # URL for the previous page, if any
+        "next": full_next_url,  # URL for the next page, if any
+        "results": serializer,  # Serialized paginated data
     }
 
+    # Return the serialized data in a DRF Response
     return Response(serializer_data)
 
 
