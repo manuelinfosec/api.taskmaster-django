@@ -9,9 +9,11 @@
 Register a new user
 
 **Request Example:**
-```json
+```
 POST api/v1/auth/register/
+```
 
+```json
 {
     "first_name": "Chiemezie",
     "last_name": "Njoku",
@@ -35,9 +37,11 @@ POST api/v1/auth/register/
 Existing user login
 
 **Request Example:**
-```json
+```
 POST api/v1/auth/login/
+```
 
+```json
 {
     "username": "chiemezienjoku",
     "password": "securepassword123"
@@ -58,9 +62,11 @@ POST api/v1/auth/login/
 Accessing user profile
 
 **Request Example:**
-```json
+```
 GET api/v1/auth/profile/
+```
 
+```json
 Headers:
 Authorization: Bearer <token>
 ```
@@ -74,9 +80,11 @@ Authorization: Bearer <token>
 Updating user profile
 
 **Request Example:**
-```json
+```
 PUT api/v1/auth/profile/
+```
 
+```json
 Headers:
 Authorization: Bearer <token>
 
@@ -101,9 +109,11 @@ Authorization: Bearer <token>
 Updating user password
 
 **Request Example:**
-```json
+```
 POST api/v1/auth/profile/password/
+```
 
+```json
 Headers:
 Authorization: Bearer <token>
 
