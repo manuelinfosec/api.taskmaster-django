@@ -13,14 +13,6 @@ fake = Faker()
 register(UserFactory)
 
 
-import pytest
-from django.contrib.auth import get_user_model
-from rest_framework.test import APIClient
-from faker import Faker
-
-fake = Faker()
-
-
 @pytest.fixture
 def api_client():
     """
