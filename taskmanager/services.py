@@ -119,3 +119,4 @@ class TaskService:
         """
         task = get_object_or_error(Task, id=task_id)
         task.delete()
+        return {"message": "Task deleted successfully"}

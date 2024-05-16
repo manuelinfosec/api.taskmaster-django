@@ -7,7 +7,7 @@ urlpatterns = [
     path("tasks/", ListTasksAPI.as_view(), name="list_tasks"),
     path("tasks/create/", CreateTaskAPI.as_view(), name="create_task"),
     path(
-        "tasks/<uuid:id>/",
+        "tasks/<uuid:task_id>/",
         RetrieveUpdateDeleteTaskAPI.as_view(),
         name="retrieve_update_delete_task",
     ),

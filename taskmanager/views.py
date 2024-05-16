@@ -80,8 +80,9 @@ class RetrieveUpdateDeleteTaskAPI(generics.GenericAPIView):
             - HTTP 204 No Content: If the task deletion is successful.
             - HTTP 404 Not Found: If the task does not exist.
         """
-        task_service.delete_task(task_id)
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(
+            data=task_service.delete_task(task_id), status=status.HTTP_204_NO_CONTENT
+        )
 
 
 class ListTasksAPI(generics.GenericAPIView):

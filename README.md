@@ -271,6 +271,14 @@ Authorization: Bearer <access_token>
 
 **Response Example:**
 ```json
+{
+    "id": "4870ffda-363c-4795-a15b-136d171f14c3",
+    "title": "Complete Backend Assessment",
+    "description": "Write and submit the project proposal",
+    "status_task": "TO DO",
+    "date_created": "2024-05-16T22:08:05.319718+01:00",
+    "last_updated": "2024-05-16T22:08:05.319718+01:00"
+}
 ```
 
 
@@ -284,7 +292,7 @@ Retrieving a single task by ID
 
 **Request Example:**
 ```
-GET api/v1/tasks/123e4567-e89b-12d3-a456-426614174000/
+GET api/v1/tasks/4870ffda-363c-4795-a15b-136d171f14c3/
 
 Headers:
 Authorization: Bearer <access_token>
@@ -293,11 +301,12 @@ Authorization: Bearer <access_token>
 **Response Example:**
 ```json
 {
-    "id": "123e4567-e89b-12d3-a456-426614174000",
-    "title": "Complete Project Proposal",
-    "description": "Write and submit the project proposal by the end of the week.",
-    "created": "2024-05-17T12:00:00Z",
-    "status_task": "TO DO"
+    "id": "4870ffda-363c-4795-a15b-136d171f14c3",
+    "title": "Complete Backend Assessment",
+    "description": "Write and submit the project proposal",
+    "status_task": "TO DO",
+    "date_created": "2024-05-16T22:08:05.319718+01:00",
+    "last_updated": "2024-05-16T22:08:05.319718+01:00"
 }
 ```
 
@@ -311,7 +320,7 @@ Updating a single task by ID
 
 **Request Example:**
 ```
-PUT api/v1/tasks/123e4567-e89b-12d3-a456-426614174000/
+PUT api/v1/tasks/4870ffda-363c-4795-a15b-136d171f14c3/
 
 Headers:
 Content-Type: application/json
@@ -320,9 +329,9 @@ Authorization: Bearer <access_token>
 
 ```json
 {
-    "title": "Complete Project Proposal",
-    "description": "Write and submit the project proposal by the end of the week.",
-    "status_task": "IN PROGRESS"
+    "title": "Complete Backend Assessment",
+    "description": "Write and submit the project proposal",
+    "status_task": "DONE"
 }
 ```
 
@@ -330,11 +339,12 @@ Authorization: Bearer <access_token>
 
 ```json
 {
-    "id": "123e4567-e89b-12d3-a456-426614174000",
-    "title": "Complete Project Proposal",
-    "description": "Write and submit the project proposal by the end of the week.",
-    "created": "2024-05-17T12:00:00Z",
-    "status_task": "IN PROGRESS"
+    "id": "4870ffda-363c-4795-a15b-136d171f14c3",
+    "title": "Complete Backend Assessment",
+    "description": "Write and submit the project proposal",
+    "status_task": "DONE",
+    "date_created": "2024-05-16T22:08:05.319718+01:00",
+    "last_updated": "2024-05-16T22:11:10.519238+01:00"
 }
 ```
 
@@ -350,7 +360,7 @@ Deleting a single task by ID
 **Request Example:**
 
 ```
-DELETE api/v1/tasks/123e4567-e89b-12d3-a456-426614174000/
+DELETE api/v1/tasks/4870ffda-363c-4795-a15b-136d171f14c3/
 
 Headers:
 Authorization: Bearer <access_token>
@@ -383,5 +393,20 @@ Authorization: Bearer <access_token>
 ```
 
 **Response Example:**
-```
+```json
+{
+    "count": 1,
+    "previous": null,
+    "next": null,
+    "results": [
+        {
+            "id": "4870ffda-363c-4795-a15b-136d171f14c3",
+            "title": "Complete Backend Assessment",
+            "description": "Write and submit the project proposal",
+            "status_task": "TO DO",
+            "date_created": "2024-05-16T22:16:57.227019+01:00",
+            "last_updated": "2024-05-16T22:16:57.227019+01:00"
+        }
+    ]
+}
 ```
