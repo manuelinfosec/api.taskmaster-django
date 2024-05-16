@@ -36,6 +36,10 @@ class User(AbstractUser, BaseModel):
         - The username can only contain letters, numbers, and underscores.
 
     Meta:
+        Inherits from BaseModel which includes:
+        - id: A UUID field serving as the primary key.
+        - date_created: A timestamp automatically set when the task is created.
+        - last_updated: A timestamp automatically updated whenever the task is modified.
         ordering (list): The default ordering for query sets (descending date_joined).
         verbose_name (str): The human-readable name of the model.
         verbose_name_plural (str): The pluralized form of the verbose name.

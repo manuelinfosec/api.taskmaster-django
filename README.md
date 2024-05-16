@@ -241,3 +241,147 @@ Content-Type: application/json
 
 
 ### Task Management
+
+
+Sure, here are the request examples for the Task views:
+
+#### 1. Create Task
+**URL:** `api/v1/tasks/`
+
+**Method:** `POST`
+
+Creating a new task
+
+**Request Example:**
+```
+POST api/v1/tasks/
+
+Headers:
+Content-Type: application/json
+Authorization: Bearer <access_token>
+```
+
+```json
+{
+    "title": "Complete Backend Assessment",
+    "description": "Write and submit the project proposal",
+    "status_task": "TO DO"
+}
+```
+
+**Response Example:**
+```json
+```
+
+
+#### 2. GetTask
+
+**URL:** `api/v1/tasks/{task_id}/`
+
+**Method:** `GET`
+
+Retrieving a single task by ID
+
+**Request Example:**
+```
+GET api/v1/tasks/123e4567-e89b-12d3-a456-426614174000/
+
+Headers:
+Authorization: Bearer <access_token>
+```
+
+**Response Example:**
+```json
+{
+    "id": "123e4567-e89b-12d3-a456-426614174000",
+    "title": "Complete Project Proposal",
+    "description": "Write and submit the project proposal by the end of the week.",
+    "created": "2024-05-17T12:00:00Z",
+    "status_task": "TO DO"
+}
+```
+
+#### 3. Update Task
+
+**URL:** `api/v1/tasks/{task_id}/`
+
+**Method:** `PUT`
+
+Updating a single task by ID
+
+**Request Example:**
+```
+PUT api/v1/tasks/123e4567-e89b-12d3-a456-426614174000/
+
+Headers:
+Content-Type: application/json
+Authorization: Bearer <access_token>
+```
+
+```json
+{
+    "title": "Complete Project Proposal",
+    "description": "Write and submit the project proposal by the end of the week.",
+    "status_task": "IN PROGRESS"
+}
+```
+
+**Response Example:**
+
+```json
+{
+    "id": "123e4567-e89b-12d3-a456-426614174000",
+    "title": "Complete Project Proposal",
+    "description": "Write and submit the project proposal by the end of the week.",
+    "created": "2024-05-17T12:00:00Z",
+    "status_task": "IN PROGRESS"
+}
+```
+
+
+#### 4. Delete Task
+
+**URL:** `api/v1/tasks/{task_id}/`
+
+**Method:** `DELETE`
+
+Deleting a single task by ID
+
+**Request Example:**
+
+```
+DELETE api/v1/tasks/123e4567-e89b-12d3-a456-426614174000/
+
+Headers:
+Authorization: Bearer <access_token>
+```
+
+```json
+{
+    "message": "Task deleted successfully"
+}
+```
+
+**Response Example:**
+```json
+```
+
+#### 5. List Tasks
+**URL:** `api/v1/tasks/`
+
+**Method:** `GET`
+
+Listing all tasks
+
+**Request Example:**
+
+```
+GET api/v1/tasks/
+
+Headers:
+Authorization: Bearer <access_token>
+```
+
+**Response Example:**
+```
+```
