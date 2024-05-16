@@ -1,6 +1,6 @@
+"""Account APIs"""
+
 from django.contrib.auth import get_user_model
-from django.contrib.auth.decorators import permission_required
-from django.utils.decorators import method_decorator
 from rest_framework import generics, status
 from rest_framework.response import Response
 
@@ -12,7 +12,20 @@ auth_service = AuthService()
 
 
 class RegisterAPI(generics.GenericAPIView):
+    """
+    Endpoint for user registration.
+
+    URL: /auth/register/
+    """
+
     def post(self, request):
+        """
+        Accepts POST requests with user registration data including first name, last name,
+        username, email, and password.
+
+        Returns:
+            - HTTP 201 Created: If user registration is successful.
+        """
         return Response(
             data=auth_service.register_user(
                 first_name=request.data.get("first_name"),
@@ -26,7 +39,19 @@ class RegisterAPI(generics.GenericAPIView):
 
 
 class LoginAPI(generics.GenericAPIView):
+    """
+    Endpoint for user login.
+
+    URL: /auth/login/
+    """
+
     def post(self, request):
+        """
+        Accepts POST requests with user credentials (username and password).
+
+        Returns:
+            - HTTP 200 OK: If user authentication is successful.
+        """
         return Response(
             data=auth_service.login_user(
                 username=request.data.get("username"),
@@ -37,6 +62,14 @@ class LoginAPI(generics.GenericAPIView):
 
 
 class ProfileAPI(generics.GenericAPIView):
+    """
+    Endpoint for accessing and updating user profile.
+
+    URL: /auth/profile/
+
+    Requires authentication and only allows access to the profile of the authenticated user.
+    """
+
     permission_classes = [IsAuthenticated, IsObjectOwner]
 
     def get_object(self):
@@ -47,16 +80,26 @@ class ProfileAPI(generics.GenericAPIView):
         return obj
 
     def get(self, request):
+        """
+        Accepts GET requests to retrieve user profile data
+
+        Returns:
+        - HTTP 200 OK: If GET request for user profile data is successful.
+        """
         return Response(
             data=auth_service.get_user(
                 user_id=request.user.id,
-                auth_provider=request.user.auth_provider,
-                auth_provider_id=request.user.auth_provider_id,
             ),
             status=status.HTTP_200_OK,
         )
 
     def put(self, request):
+        """
+        PUT requests to update user profile data.
+
+        Returns:
+        - HTTP 202 Accepted: If PUT request to update user profile data is successful.
+        """
         self.get_object()
 
         return Response(
@@ -66,17 +109,29 @@ class ProfileAPI(generics.GenericAPIView):
                 last_name=request.data.get("last_name"),
                 username=request.data.get("username"),
                 email=request.data.get("email"),
-                phone_number=request.data.get("phone_number"),
-                user_type=request.data.get("user_type"),
             ),
             status=status.HTTP_202_ACCEPTED,
         )
 
 
 class UserUpdatePasswordAPI(generics.GenericAPIView):
+    """
+    Endpoint for updating user password.
+
+    URL: /auth/profile/password/
+
+    Requires authentication.
+    """
+
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
+        """
+        Accepts POST requests with old password, new password, and password confirmation.
+
+        Returns:
+        - HTTP 200 OK: If password update is successful.
+        """
         return Response(
             data=auth_service.update_user_password(
                 user_id=request.user.id,
