@@ -6,6 +6,7 @@
 **URL:** `api/v1/auth/register/`
 
 **Method:** `POST`
+
 Register a new user
 
 **Request Example:**
@@ -34,6 +35,7 @@ POST api/v1/auth/register/
 **URL:** `api/v1/auth/login/`
 
 **Method:** `POST`
+
 Existing user login
 
 **Request Example:**
@@ -59,6 +61,7 @@ POST api/v1/auth/login/
 **URL:** `api/v1/auth/profile/`
 
 **Method:** `GET`
+
 Accessing user profile
 
 **Request Example:**
@@ -69,20 +72,19 @@ Headers:
 Authorization: Bearer <token>
 ```
 
-```json
-```
-
 **Response Example:**
 ```json
 
 ```
 
 **Method:** `PUT`
+
 Updating user profile
 
 **Request Example:**
 ```
 PUT api/v1/auth/profile/
+
 Headers:
 Authorization: Bearer <token>
 ```
@@ -107,11 +109,13 @@ Authorization: Bearer <token>
 **URL:** `api/v1/auth/profile/password/`
 
 **Method:** `POST`
+
 Updating user password
 
 **Request Example:**
 ```
 POST api/v1/auth/profile/password/
+
 Headers:
 Authorization: Bearer <token>
 ```
