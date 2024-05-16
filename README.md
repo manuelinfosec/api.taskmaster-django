@@ -81,8 +81,10 @@ POST api/v1/auth/login/
 }
 ```
 
+#### 3.  Logout (Not implemented)
+- Application relies on expiration of JWT tokens for logout.
 
-#### 3. ProfileAPI
+#### 4. ProfileAPI
 
 **URL:** `api/v1/auth/profile/`
 
@@ -95,7 +97,7 @@ Accessing user profile
 GET api/v1/auth/profile/
 
 Headers:
-Authorization: Bearer <token>
+Authorization: Bearer <access_token>
 ```
 
 **Response Example:**
@@ -121,7 +123,7 @@ Updating user profile
 PUT api/v1/auth/profile/
 
 Headers:
-Authorization: Bearer <token>
+Authorization: Bearer <access_token>
 ```
 
 ```json
@@ -145,7 +147,7 @@ Authorization: Bearer <token>
 }
 ```
 
-#### 4. UserUpdatePasswordAPI
+#### 5. UserUpdatePasswordAPI
 
 **URL:** `api/v1/auth/profile/password/`
 
@@ -158,7 +160,7 @@ Updating user password
 POST api/v1/auth/profile/password/
 
 Headers:
-Authorization: Bearer <token>
+Authorization: Bearer <access_token>
 ```
 
 ```json
@@ -176,7 +178,66 @@ Authorization: Bearer <token>
 }
 ```
 
-#### Logout (Not implemented)
-- Application relies on expiration of JWT tokens for logout.
+#### 6. TokenVerify
+**URL:** `api/v1/auth/token/verify/`
+
+**Method:** `POST`
+
+Verifying a user token
+
+Request Example:
+
+```
+POST api/v1/auth/token/verify/
+
+Headers:
+Content-Type: application/json
+```
+
+**Request Example:**
+```json
+{
+    "token": "<access_token>"
+}
+```
+
+**Response Example:**
+```json
+{
+    "message": "Token is valid"
+}
+```
+
+#### 6. TokenRefresh
+**URL:** `api/v1/auth/token/refresh/`
+
+**Method:** `POST`
+
+Refreshing a user token
+
+Request Example:
+```
+POST api/v1/auth/token/refresh/
+
+Headers:
+Content-Type: application/json
+```
+
+**Request Example::**
+```json
+{
+    "refresh": "<refresh_token>"
+}
+
+```
+**Response Example:**
+```json
+{
+    "access": "<new_access_token>",
+    "refresh": "<new_refresh_token>"
+}
+
+```
+
 
 ### Task Management
