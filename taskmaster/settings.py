@@ -106,7 +106,7 @@ AUTH_USER_MODEL = "accounts.User"
 
 # Auth Backend
 AUTHENTICATION_BACKENDS = [
-    "user.authentications.AuthUserBackend",
+    "accounts.authentication.AuthUserBackend",
     "django.contrib.auth.backends.ModelBackend",
 ]
 
@@ -150,7 +150,7 @@ REST_FRAMEWORK = {
         "rest_framework.renderers.JSONRenderer",
     ],
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework_simplejwt.authentication.JWTAuthentication",    # Authentication via JSON Web Tokens (JWT)
+        "rest_framework_simplejwt.authentication.JWTAuthentication",  # Authentication via JSON Web Tokens (JWT)
     ],
 }
 

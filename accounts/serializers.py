@@ -130,13 +130,13 @@ class UserUpdatePasswordSerializer(serializers.Serializer):
 
     user_id = serializers.UUIDField(required=True)  # Field for user ID
     old_password = serializers.CharField(
-        required=True, min_length=6, max_length=16
+        required=True, min_length=6
     )  # Field for old password
     new_password_1 = serializers.CharField(
-        required=True, min_length=6, max_length=16
+        required=True, min_length=6
     )  # Field for new password (first entry)
     new_password_2 = serializers.CharField(
-        required=True, min_length=6, max_length=16
+        required=True, min_length=6
     )  # Field for new password (second entry)
 
     def validate(self, data):

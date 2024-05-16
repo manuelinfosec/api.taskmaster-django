@@ -19,14 +19,27 @@ POST api/v1/auth/register/
     "first_name": "Chiemezie",
     "last_name": "Njoku",
     "username": "chiemezienjoku",
-    "email": "chiemezienjoku@example.com",
+    "email": "njokuchiemezie01@gmail.com",
     "password": "securepassword123()"
 }
 ```
 
 **Response Example:**
 ```json
-
+{
+    "id": "ba897d82-a592-4fb5-990d-f3310f3c99dc",
+    "first_name": "Chiemezie",
+    "last_name": "Njoku",
+    "username": "chiemezienjoku",
+    "email": "njokuchiemezie01@gmail.com",
+    "last_updated": "2024-05-16T04:17:48.532089+01:00",
+    "last_login": "2024-05-16T04:17:48.052070+01:00",
+    "is_superuser": false,
+    "tokens": {
+        "access": "<access_token>",
+        "refresh": "<refresh_token>"
+    }
+}
 ```
 
 #### 2. LoginAPI
@@ -52,7 +65,20 @@ POST api/v1/auth/login/
 
 **Response Example:**
 ```json
-
+{
+    "id": "ba897d82-a592-4fb5-990d-f3310f3c99dc",
+    "first_name": "Chiemezie",
+    "last_name": "Njoku",
+    "username": "chiemezienjoku",
+    "email": "njokuchiemezie01@gmail.com",
+    "last_updated": "2024-05-16T04:17:48.532089+01:00",
+    "last_login": "2024-05-16T04:17:48.052070+01:00",
+    "is_superuser": false,
+    "tokens": {
+        "access": "<access_token>",
+        "refresh": "<refresh_token>"
+    }
+}
 ```
 
 
@@ -74,7 +100,16 @@ Authorization: Bearer <token>
 
 **Response Example:**
 ```json
-
+{
+    "id": "ba897d82-a592-4fb5-990d-f3310f3c99dc",
+    "first_name": "Chiemezie",
+    "last_name": "Njoku",
+    "username": "chiemezienjoku",
+    "email": "njokuchiemezie01@gmail.com",
+    "last_updated": "2024-05-16T04:24:53.688303+01:00",
+    "last_login": "2024-05-16T04:24:53.688303+01:00",
+    "is_superuser": false
+}
 ```
 
 **Method:** `PUT`
@@ -92,16 +127,22 @@ Authorization: Bearer <token>
 ```json
 
 {
-    "first_name": "Chiemezie",
-    "last_name": "Njoku",
     "username": "manuelinfosec",
-    "email": "chiemezienjoku@example.com"
 }
 ```
 
 **Response Example:**
 ```json
-
+{
+    "id": "ba897d82-a592-4fb5-990d-f3310f3c99dc",
+    "first_name": "Chiemezie",
+    "last_name": "Njoku",
+    "username": "manuelinfosec",
+    "email": "chiemezienjoku@example.com",
+    "last_updated": "2024-05-16T04:29:16.296174+01:00",
+    "last_login": "2024-05-16T04:24:53.688303+01:00",
+    "is_superuser": false
+}
 ```
 
 #### 4. UserUpdatePasswordAPI
@@ -121,7 +162,6 @@ Authorization: Bearer <token>
 ```
 
 ```json
-
 {
     "old_password": "securepassword123()",
     "new_password_1": "newsecurepassword123!!",
@@ -131,7 +171,9 @@ Authorization: Bearer <token>
 
 **Response Example:**
 ```json
-
+{
+    "detail": "password updated successfully"
+}
 ```
 
 #### Logout (Not implemented)

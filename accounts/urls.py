@@ -4,7 +4,7 @@ from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
 
 from accounts.views import LoginAPI, ProfileAPI, RegisterAPI, UserUpdatePasswordAPI
 
-auth_urls = [
+urlpatterns = [
     path("auth/register/", RegisterAPI.as_view(), name="register_user"),
     path("auth/login/", LoginAPI.as_view(), name="login_user"),
     path("auth/token/verify/", TokenVerifyView.as_view(), name="user_token_verify"),
