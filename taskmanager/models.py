@@ -36,7 +36,7 @@ class Task(BaseModel):
     TASK_STATUS = (("TO DO", "TO DO"), ("IN PROGRESS", "IN PROGRESS"), ("DONE", "DONE"))
 
     user = models.ForeignKey(
-        get_user_model(), related_name="orders", on_delete=models.SET_NULL, null=True
+        get_user_model(), related_name="users", on_delete=models.SET_NULL, null=True
     )
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True)

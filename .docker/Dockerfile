@@ -5,7 +5,7 @@ RUN adduser --disabled-password --gecos '' user
 # RUN apk --update add gcc build-base freetype-dev libpng-dev openblas-dev
 
 USER user
-WORKDIR /home/user/app
+WORKDIR /home/user/taskapp
 
 ENV PATH="/home/user/.local/bin:$PATH"
 COPY --chown=user:user requirements.txt .
@@ -16,10 +16,8 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 # copy over deployment files
-COPY .docker/deployment/supervisord.conf /etc/supervisord.conf
 COPY .docker/deployment/gunicorn.conf /etc/supervisor/conf.d/gunicorn.conf
 COPY .docker/deployment/daphne.conf /etc/supervisor/conf.d/daphne.conf
-COPY .docker/deployment/celery.conf /etc/supervisor/conf.d/celery.conf
 
 COPY --chown=user:user . .
 

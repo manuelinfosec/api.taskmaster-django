@@ -1,35 +1,127 @@
-## Project Structure
+# api.taskmaster-django
 
-This project is organized to ensure a clean and maintainable codebase. The project uses both ASGI and WSGI applications to handle different parts of the application.
-
-### ASGI and WSGI Applications
-
-- **ASGI Application:** Used to handle the WebSocket part of the application, enabling real-time features such as task notifications.
-
-- **WSGI Application:** Used to handle the traditional HTTP requests for the CRUD endpoints and other standard web functionalities.
-
-
-### Components
-
-The project architecture follows a View-Service-Serializer-Model (VSSM) approach, promoting a separation of concerns and enhancing the maintainability and testability. Here's a brief explanation of each component:
-
-1. **View**
-    - Responsible for handling HTTP requests and returning HTTP responses.
-    - Inherits from Django’s `View` classes (e.g., `APIView`, `ViewSet`).
-
-2. **Service**
-    - Contains the business logic of the application.
-    - Decouples the business logic from the views, making it easier to test and maintain.
-
-3. **Serializer**
-    - Translates complex data types (e.g., querysets) into JSON and vice versa.
-    - Validates incoming data to ensure it meets the expected format.
-
-4. **Model**
-    - Defines the structure of the data in the application.
-    - Represents the database schema using Django’s ORM (Object-Relational Mapping).
+## Project objective
+### Task 1: API Development
+Develop a RESTful API for a simple task management system with the following features:
+- User Authentication: Implement authentication using JWT tokens.
+- CRUD Operations: Implement endpoints for creating, reading, updating, and deleting tasks.
+- Data Persistence: Use a database of your choice to store task data.
+- Input Validation: Validate input data to ensure data integrity and security.
 
 
+### Task 2: Documentation
+Document your API endpoints, data models, and any other relevant information necessary for understanding and using your code. Provide clear and concise documentation to aid future developers who may work with your code.
+
+Make sure to create a socket to stream the data created In real-time.
+
+## Deployment
+### Running the Application in Development Mode
+
+To run this Django application in development mode, follow these steps:
+
+1. **Clone the Repository**
+
+    Clone the project repository to your local machine:
+    ```bash
+    git clone https://github.com/manuelinfosec/api.taskmaster-django.git
+    cd api.taskmaster-django
+    ```
+
+2. **Create and Activate a Virtual Environment**
+
+    It's good practice to use a virtual environment to manage dependencies:
+    ```bash
+    python -m venv .venv
+    source env/bin/activate   # On Windows use `env\Scripts\activate`
+    ```
+
+3. **Install Dependencies**
+
+    Install the required packages using pip:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4. **Run Migrations**
+
+    Apply the database migrations to set up your database schema:
+    ```bash
+    python manage.py migrate
+    ```
+
+6. **Run the Development Server**
+
+    Start the development server:
+    ```bash
+    python manage.py runserver
+    ```
+
+    You can now access the application at `http://127.0.0.1:8000/`.
+
+### Deploying the Django Application to Production with Docker-Compose
+
+To deploy the application to production using Docker-Compose, follow these steps:
+
+1. **Clone the Repository**
+
+    Clone the project repository to your server:
+    ```bash
+    git clone https://github.com/manuelinfosec/api.taskmaster-django.git
+    cd api.taskmaster-django
+    ```
+
+2. **Create Environment Variables File**
+
+    Create a `.env` file in the root directory with the following content:
+    ```env
+    SECRET_KEY=
+    ENVIRONMENT=
+    DB_USER=
+    DB_PASSWORD=
+    DB_NAME=
+    DB_HOST=
+    DB_PORT=
+    ```
+
+3. **Build and Run the Containers**
+
+    Build the Docker images and start the containers:
+    ```bash
+    docker-compose up --build -d
+    ```
+
+4. **Run Migrations**
+
+    Apply the database migrations inside the running web container:
+    ```bash
+    docker-compose exec web python manage.py migrate
+    ```
+
+5. **Create a Superuser**
+
+    Create a superuser for accessing the admin interface:
+    ```bash
+    docker-compose exec web python manage.py createsuperuser
+    ```
+
+6. **Access the Application**
+
+    Your application should now be running and accessible at `http://domain.com`.
+
+### Additional Notes
+- For persistence, this project uses SQLite in development mode and PostgreSQL in a production environment.
+- Ensure you have Docker and Docker-Compose installed.
+- Update the `.env` file with your production environment variables.
+- For SSL/TLS, consider using a reverse proxy like Nginx or Traefik to handle HTTPS connections.
+
+
+## Validation and Constraints Implemented
+- User Authentication:
+  - Username can only contain letters, numbers and underscore.
+  - Passwords have a minimum length of 6 characters.
+
+- Task Management
+  - Task status can only be any of the following: TO DO, IN PROGRESS, DONE.
 
 ## API Documentation
 ### User Authentication
@@ -458,7 +550,41 @@ Real-time notifications when a new task is created.
     "description": "Write and submit the project proposal",
     "status_task": "TO DO",
     "date_created": "2024-05-17T01:40:11.499810+01:00",
-    "last_updated": "2024-05-17T01:40:11.499810+01:00"
+    "last_updated": "2024-05-17T01:40:11.499810+01:00",
+    "action": "task_create"
+}
+```
+
+#### 2. TaskUpdate Stream
+
+**Stream URL:** `ws/tasks/`
+
+Real-time notifications when a new task is updated.
+
+***Response Example:**
+```json
+{
+    "id": "4870ffda-363c-4795-a15b-136d171f14c3",
+    "title": "Complete Backend Assessment",
+    "description": "Write and submit the project proposal",
+    "status_task": "TO DO",
+    "date_created": "2024-05-17T01:40:11.499810+01:00",
+    "last_updated": "2024-05-17T01:40:11.499810+01:00",
+    "action": "task_update"
+}
+```
+
+#### 3. TaskDelete Stream
+
+**Stream URL:** `ws/tasks/`
+
+Real-time notifications when a new task is deleted.
+
+***Response Example:**
+```json
+{
+    "id": "4870ffda-363c-4795-a15b-136d171f14c3",
+    "action": "task_delete"
 }
 ```
 

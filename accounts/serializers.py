@@ -58,33 +58,6 @@ class UserSerializer(serializers.ModelSerializer):
 
         return super().to_internal_value(data)
 
-    def validate_phone_number(self, value):
-        """
-        Validate phone number format.
-
-        Args:
-            value (str): The phone number value.
-
-        Raises:
-            serializers.ValidationError: If the phone number format is incorrect.
-
-        Returns:
-            str: The validated phone number.
-        """
-        phone_number_format = re.compile(
-            r"[+]?\d{11,14}$"
-        )  # Define the regex pattern for phone numbers
-
-        if value:  # Check if a phone number value is provided
-            if not phone_number_format.match(
-                value
-            ):  # Check if the value matches the pattern
-                raise serializers.ValidationError(  # Raise a validation error if the pattern doesn't match
-                    detail="Phone number is incorrect", code=status.HTTP_400_BAD_REQUEST
-                )
-
-        return value  # Return the validated phone number
-
     def create(self, validated_data):
         """
         Create a new user instance.

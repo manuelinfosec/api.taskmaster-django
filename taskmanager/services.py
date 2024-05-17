@@ -46,10 +46,15 @@ class TaskService:
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
+        # copy serialized data for streaming
+        data_stream = serializer.data
+
+        data_stream["action"] = "task_create"
+
         # Strem task to WebSocket handler
         async_to_sync(events.send_task)(
             group_name="task_stream",
-            data=serializer.data,
+            data=data_stream,
         )
 
         return serializer.data
@@ -127,6 +132,18 @@ class TaskService:
         serializer = TaskSerializer(task, data=task_update_data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
+
+        # copy serialized data for streaming
+        data_stream = serializer.data
+
+        data_stream["action"] = "task_update"
+
+        # Strem task to WebSocket handler
+        async_to_sync(events.send_task)(
+            group_name="task_stream",
+            data=data_stream,
+        )
+
         return serializer.data
 
     @staticmethod
@@ -140,4 +157,13 @@ class TaskService:
         """
         task = get_object_or_error(Task, id=task_id, user_id=user_id)
         task.delete()
+
+        data_stream = {"id": task_id, "action": "task_delete"}
+
+        # Strem task to WebSocket handler
+        async_to_sync(events.send_task)(
+            group_name="task_stream",
+            data=data_stream,
+        )
+
         return {"message": "Task deleted successfully"}

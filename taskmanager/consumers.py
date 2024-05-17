@@ -1,13 +1,4 @@
-
-import json  
-import uuid  
-
-from channels.db import database_sync_to_async  
-from channels.generic.websocket import AsyncJsonWebsocketConsumer  
-
-from accounts.models import User as UserModel   
-from taskmanager.models import Task as TaskModel   
-from taskmaster.utils import get_object_or_error 
+from channels.generic.websocket import AsyncJsonWebsocketConsumer
 
 
 class AsyncTaskNotificationConsumer(AsyncJsonWebsocketConsumer):
@@ -33,7 +24,7 @@ class AsyncTaskNotificationConsumer(AsyncJsonWebsocketConsumer):
         """
         Handles the WebSocket disconnection event.
         Removes the current WebSocket connection from the group.
-        
+
         Args:
             code (int): The disconnection code.
         """
@@ -43,12 +34,12 @@ class AsyncTaskNotificationConsumer(AsyncJsonWebsocketConsumer):
     async def send_task(self, event: dict):
         """
         Sends a task notification message to the WebSocket client.
-        
+
         Args:
             event (dict): The event dictionary containing the message to be sent.
         """
         # Retrieve the message from the event dictionary
         message = event["message"]
-        
+
         # Send the message to the WebSocket client as JSON
         await self.send_json(content=message)
