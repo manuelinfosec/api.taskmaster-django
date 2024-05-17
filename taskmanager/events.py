@@ -5,15 +5,16 @@ from channels.layers import get_channel_layer
 
 async def send_task(group_name: str, data: Optional[dict] = None) -> None:
     """
-    Task Stream
+    Send Task Notification
 
-    required parameters:
+    This function is called from within the Task Create Service and is responsible for sending task notifications
+    to a specified group via WebSocket. It calls the `send_task` method within the `AsyncTaskNotificationConsumer`.
 
-    group_name: group name to send message to.
+    Required parameters:
+    group_name: str - The name of the group to send the message to.
 
     Optional parameters:
-
-    data: a dictionary containing task details.
+    data: dict (optional) - A dictionary containing task details.
     """
     channel_layer = get_channel_layer()
 
