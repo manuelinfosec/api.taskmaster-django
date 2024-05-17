@@ -635,5 +635,3 @@ To ensure the proper functionality of the application, we use `pytest` for runni
    pytest --cov=taskmanager --cov=accounts --cov-report=html
    ```
    The report will be available in the `htmlcov` directory. Open the `index.html` file in your browser to view the detailed report.
-
-By following these steps, you can ensure that your application is well-tested and reliable.
