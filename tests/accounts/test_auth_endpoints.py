@@ -82,7 +82,7 @@ class TestAuthEndpoints:
         user = user_factory.create()
 
         # Send a PUT request to update user profile
-        response = api_client(user=user).put(
+        response = api_client(user=user).(
             reverse("get_update_profile"),
             data={"first_name": "New First Name", "last_name": "New Last Name"},
             format="json",

@@ -93,7 +93,7 @@ class ProfileAPI(generics.GenericAPIView):
             status=status.HTTP_200_OK,
         )
 
-    def put(self, request):
+    def patch(self, request):
         """
         PUT requests to update user profile data.
 

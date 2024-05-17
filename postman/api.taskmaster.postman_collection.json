@@ -34,7 +34,7 @@
 						{
 							"name": "Update User Profile",
 							"request": {
-								"method": "PUT",
+								"method": "PATCH",
 								"header": [],
 								"body": {
 									"mode": "raw",
@@ -185,13 +185,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/tasks/30fbebfb-cf52-46fc-a554-7f640987b925/",
+							"raw": "{{URL}}/tasks/7c941efb-e903-4add-b54c-8b79df5b4faf/",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"tasks",
-								"30fbebfb-cf52-46fc-a554-7f640987b925",
+								"7c941efb-e903-4add-b54c-8b79df5b4faf",
 								""
 							]
 						}
@@ -213,13 +213,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{URL}}/tasks/4870ffda-363c-4795-a15b-136d171f14c3/",
+							"raw": "{{URL}}/tasks/a12dfc64-c1ba-402b-b7d2-004372cc6e4f/",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"tasks",
-								"4870ffda-363c-4795-a15b-136d171f14c3",
+								"a12dfc64-c1ba-402b-b7d2-004372cc6e4f",
 								""
 							]
 						}
@@ -232,13 +232,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{URL}}/tasks/7476f615-a286-4b79-ac52-1b641358ef2b/",
+							"raw": "{{URL}}/tasks/db0d7973-0260-416f-a9db-8969a195b33c/",
 							"host": [
 								"{{URL}}"
 							],
 							"path": [
 								"tasks",
-								"7476f615-a286-4b79-ac52-1b641358ef2b",
+								"db0d7973-0260-416f-a9db-8969a195b33c",
 								""
 							]
 						}

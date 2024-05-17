@@ -240,13 +240,13 @@ Authorization: Bearer <access_token>
 }
 ```
 
-**Method:** `PUT`
+**Method:** `PATCH`
 
 Updating user profile
 
 **Request Example:**
 ```
-PUT api/v1/auth/profile/
+PATCH api/v1/auth/profile/
 
 Headers:
 Authorization: Bearer <access_token>
