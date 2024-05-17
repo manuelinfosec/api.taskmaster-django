@@ -79,12 +79,12 @@ class RetrieveUpdateDeleteTaskAPI(generics.GenericAPIView):
         Accepts DELETE requests to delete a task by task ID.
 
         Returns:
-            - HTTP 204 No Content: If the task deletion is successful.
+            - HTTP 200: If the task deletion is successful.
             - HTTP 404 Not Found: If the task does not exist.
         """
         return Response(
             data=task_service.delete_task(request.user.id, task_id),
-            status=status.HTTP_204_NO_CONTENT,
+            status=status.HTTP_200_OK,
         )
 
 

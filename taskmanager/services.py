@@ -56,7 +56,7 @@ class TaskService:
         # function directly in a synchronous context. To handle this, we use `async_to_sync` from `channels`.
         # This utility function allows us to call asynchronous code from synchronous code.
         async_to_sync(events.send_task)(
-            group_name="task_stream",
+            group_name=f"user_{user_id}_task_stream",
             data=data_stream,
         )
 
@@ -146,11 +146,7 @@ class TaskService:
         # function directly in a synchronous context. To handle this, we use `async_to_sync` from `channels`.
         # This utility function allows us to call asynchronous code from synchronous code.
         async_to_sync(events.send_task)(
-            group_name="task_stream",
-            data=data_stream,
-        )
-        async_to_sync(events.send_task)(
-            group_name="task_stream",
+            group_name=f"user_{user_id}_task_stream",
             data=data_stream,
         )
 
@@ -168,18 +164,14 @@ class TaskService:
         task = get_object_or_error(Task, id=task_id, user_id=user_id)
         task.delete()
 
-        data_stream = {"id": task_id, "action": "task_delete"}
+        data_stream = {"id": str(task_id), "action": "task_delete"}
 
         # Stream task to WebSocket handler
         # The `events.send_task` function is asynchronous and Python doesn't allow calling an async
         # function directly in a synchronous context. To handle this, we use `async_to_sync` from `channels`.
         # This utility function allows us to call asynchronous code from synchronous code.
         async_to_sync(events.send_task)(
-            group_name="task_stream",
-            data=data_stream,
-        )
-        async_to_sync(events.send_task)(
-            group_name="task_stream",
+            group_name=f"user_{user_id}_task_stream",
             data=data_stream,
         )
 

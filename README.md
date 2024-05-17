@@ -534,6 +534,14 @@ Authorization: Bearer <access_token>
 ```
 
 ### Websocket Streams
+
+Every websocket connect request is required to have the authorization token in its headers
+
+```
+Headers:
+authorization: <access_token>
+```
+
 #### 1. TaskCreate Stream
 
 **Stream URL:** `ws/tasks/`
@@ -635,3 +643,12 @@ To ensure the proper functionality of the application, we use `pytest` for runni
    pytest --cov=taskmanager --cov=accounts --cov-report=html
    ```
    The report will be available in the `htmlcov` directory. Open the `index.html` file in your browser to view the detailed report.
+
+## Issues Encountered
+
+### 1. WebSocket Notifications Not Scoped to the Correct User
+**Description:**
+WebSocket notifications are currently not scoped to the correct user. Task notifications are broadcast to all users subscribed to the WebSocket channel, resulting in users receiving irrelevant task updates that are not associated with them.
+
+**Fix:**
+To resolve this issue, the WebSocket implementation was modified to ensure that notifications are only sent to the specific user associated with the task. This was achieved by creating unique WebSocket groups for each user based on the `user_id` and sending notifications to the appropriate group.

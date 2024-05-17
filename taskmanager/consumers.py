@@ -1,4 +1,8 @@
+"""Task Manager Websocket APIs"""
+
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
+
+from accounts.services import User as UserModel
 
 
 class AsyncTaskNotificationConsumer(AsyncJsonWebsocketConsumer):
@@ -10,15 +14,28 @@ class AsyncTaskNotificationConsumer(AsyncJsonWebsocketConsumer):
         """
         Handles the WebSocket connection event.
         Adds the current WebSocket connection to a group and accepts the connection.
+        If an error occurs, sends an error response.
         """
-        # Define a group name for WebSocket communication
-        self.group_name = "task_stream"
+        try:
+            # Define a group name for WebSocket communication
+            self.user = self.scope.get("user")
 
-        # Add the current channel to the group
-        await self.channel_layer.group_add(self.group_name, self.channel_name)
+            self.group_name = f"user_{self.user.id}_task_stream"
 
-        # Accept the WebSocket connection
-        await self.accept()
+            # Add the current channel to the group
+            await self.channel_layer.group_add(self.group_name, self.channel_name)
+
+            # Accept the WebSocket connection
+            await self.accept()
+        except AttributeError:
+            # TODO: Log the exception (optional)
+            # print(f"Error during WebSocket connection: {e}")
+
+            # Send an error message to the client and close the connection
+            await self.send_json(
+                {"error": "An error occurred while connecting to the WebSocket."}
+            )
+            await self.close(code=4000)
 
     async def disconnect(self, code):
         """

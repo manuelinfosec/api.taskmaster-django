@@ -20,8 +20,6 @@ async def send_task(group_name: str, data: Optional[dict] = None) -> None:
 
     if not channel_layer:
         return None
-    
-    print(data)
 
     await channel_layer.group_send(
         group_name,
