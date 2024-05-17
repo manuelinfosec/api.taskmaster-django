@@ -489,15 +489,14 @@ Headers:
 Authorization: Bearer <access_token>
 ```
 
+**Response Example:**
+
 ```json
 {
     "message": "Task deleted successfully"
 }
 ```
 
-**Response Example:**
-```json
-```
 
 #### 5. List Tasks
 **URL:** `api/v1/tasks/`
