@@ -1,5 +1,8 @@
 """Task manager models"""
+
+from django.contrib.auth import get_user_model
 from django.db import models
+
 from taskmaster.utils import BaseModel
 
 
@@ -12,6 +15,8 @@ class Task(BaseModel):
 
     Attributes:
         TASK_STATUS (tuple): A tuple of possible task status choices.
+
+        user (User): Task Owner. This is field is a foreign reference to the User model.
         title (str): The title of the task. This field is required and has a maximum length of 100 characters.
         description (str): A detailed description of the task. This field is optional.
         status_task (str): The current status of the task. This field is optional and defaults to "TO DO".
@@ -30,6 +35,9 @@ class Task(BaseModel):
 
     TASK_STATUS = (("TO DO", "TO DO"), ("IN PROGRESS", "IN PROGRESS"), ("DONE", "DONE"))
 
+    user = models.ForeignKey(
+        get_user_model(), related_name="orders", on_delete=models.SET_NULL, null=True
+    )
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True)
     status_task = models.CharField(

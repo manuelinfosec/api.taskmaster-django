@@ -1,7 +1,9 @@
 """Task Manager URLs"""
 
 from django.urls import path
-from taskmanager.views import CreateTaskAPI, RetrieveUpdateDeleteTaskAPI, ListTasksAPI
+
+from taskmanager.consumers import AsyncTaskNotificationConsumer
+from taskmanager.views import CreateTaskAPI, ListTasksAPI, RetrieveUpdateDeleteTaskAPI
 
 urlpatterns = [
     path("tasks/", ListTasksAPI.as_view(), name="list_tasks"),
@@ -10,5 +12,14 @@ urlpatterns = [
         "tasks/<uuid:task_id>/",
         RetrieveUpdateDeleteTaskAPI.as_view(),
         name="retrieve_update_delete_task",
+    ),
+]
+
+
+ws_urlpatterns = [
+    path(
+        "ws/task/<str:id>",
+        AsyncTaskNotificationConsumer.as_asgi(),
+        name="ws_task_notification",
     ),
 ]

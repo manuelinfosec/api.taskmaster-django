@@ -1,7 +1,11 @@
 """Task Manager Services"""
 
+import uuid
 from typing import Optional
 
+from asgiref.sync import async_to_sync
+
+from taskmanager import events
 from taskmanager.models import Task
 from taskmanager.serializers import TaskSerializer
 from taskmaster.utils import get_object_or_error, paginate_queryset, remove_none_values
@@ -23,51 +27,65 @@ class TaskService:
     """
 
     @staticmethod
-    def create_task(title: str, description: Optional[str] = "") -> dict:
+    def create_task(
+        user_id: uuid.UUID, title: str, description: Optional[str] = ""
+    ) -> dict:
         """
         Creates a new task with the provided data.
 
         Args:
+            user_id (uuid.UUID): Task owner
             title (str): The title of the task.
             description (str, optional): The description of the task.
 
         Returns:
             dict: Serialized task data.
         """
-        task_data = {"title": title, "description": description}
+        task_data = {"user": user_id, "title": title, "description": description}
         serializer = TaskSerializer(data=task_data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
+
+        # Strem task to WebSocket handler
+        async_to_sync(events.send_task)(
+            group_name="task_stream",
+            data=serializer.data,
+        )
+
         return serializer.data
 
     @staticmethod
-    def get_task(task_id: str) -> dict:
+    def get_task(user_id: uuid.UUID, task_id: str) -> dict:
         """
         Retrieves a task based on the task ID.
 
         Args:
+            user_id (uuid.UUID): Task owner
             task_id (str): The ID of the task.
 
         Returns:
             dict: Serialized task data.
         """
-        task = get_object_or_error(Task, id=task_id)
+        task = get_object_or_error(Task, id=task_id, user_id=user_id)
         return TaskSerializer(task).data
 
     @staticmethod
-    def list_tasks(request, page: int = 1, page_size: int = 10) -> dict:
+    def list_tasks(
+        request, user_id: uuid.UUID, page: int = 1, page_size: int = 10
+    ) -> dict:
         """
         Retrieves a paginated list of all tasks.
 
         Args:
             request (HttpRequest): The HTTP request object.
+            user_id (uuid.UUID): Task owner
             page (int, optional): The page number for pagination.
             page_size (int, optional): The number of tasks per page.
 
         Returns:
             dict: Serialized task data in a paginated format.
         """
-        tasks = Task.objects.all()
+        tasks = Task.objects.filter(user_id=user_id)
         paginated_data = paginate_queryset(
             request=request,
             queryset=tasks,
@@ -79,6 +97,7 @@ class TaskService:
 
     @staticmethod
     def update_task(
+        user_id: uuid.UUID,
         task_id: str,
         title: Optional[str] = None,
         description: Optional[str] = None,
@@ -88,6 +107,7 @@ class TaskService:
         Updates task information based on the provided data.
 
         Args:
+            user_id (uuid.UUID): Task owner
             task_id (str): The ID of the task.
             title (str, optional): The updated title of the task.
             description (str, optional): The updated description of the task.
@@ -96,7 +116,7 @@ class TaskService:
         Returns:
             dict: Serialized updated task data.
         """
-        task = get_object_or_error(Task, id=task_id)
+        task = get_object_or_error(Task, id=task_id, user_id=user_id)
         task_update_data = remove_none_values(
             {
                 "title": title,
@@ -110,13 +130,14 @@ class TaskService:
         return serializer.data
 
     @staticmethod
-    def delete_task(task_id: str) -> None:
+    def delete_task(user_id: uuid.UUID, task_id: str) -> None:
         """
         Deletes a task based on the task ID.
 
         Args:
+            user_id (uuid.UUID): Task owner
             task_id (str): The ID of the task to be deleted.
         """
-        task = get_object_or_error(Task, id=task_id)
+        task = get_object_or_error(Task, id=task_id, user_id=user_id)
         task.delete()
         return {"message": "Task deleted successfully"}

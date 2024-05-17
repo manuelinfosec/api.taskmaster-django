@@ -27,6 +27,7 @@ class CreateTaskAPI(generics.GenericAPIView):
         """
         return Response(
             data=task_service.create_task(
+                request.user.id,
                 title=request.data.get("title"),
                 description=request.data.get("description"),
             ),
@@ -50,7 +51,7 @@ class RetrieveUpdateDeleteTaskAPI(generics.GenericAPIView):
             - HTTP 404 Not Found: If the task does not exist.
         """
         return Response(
-            data=task_service.get_task(task_id),
+            data=task_service.get_task(request.user.id, task_id),
             status=status.HTTP_200_OK,
         )
 
@@ -64,6 +65,7 @@ class RetrieveUpdateDeleteTaskAPI(generics.GenericAPIView):
         """
         return Response(
             data=task_service.update_task(
+                request.user.id,
                 task_id,
                 title=request.data.get("title"),
                 description=request.data.get("description"),
@@ -81,7 +83,8 @@ class RetrieveUpdateDeleteTaskAPI(generics.GenericAPIView):
             - HTTP 404 Not Found: If the task does not exist.
         """
         return Response(
-            data=task_service.delete_task(task_id), status=status.HTTP_204_NO_CONTENT
+            data=task_service.delete_task(request.user.id, task_id),
+            status=status.HTTP_204_NO_CONTENT,
         )
 
 
@@ -100,6 +103,6 @@ class ListTasksAPI(generics.GenericAPIView):
             - HTTP 200 OK: With a paginated list of tasks.
         """
         return Response(
-            data=task_service.list_tasks(request),
+            data=task_service.list_tasks(request, request.user.id),
             status=status.HTTP_200_OK,
         )

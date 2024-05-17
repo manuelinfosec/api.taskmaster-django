@@ -24,6 +24,7 @@ class TaskSerializer(serializers.ModelSerializer):
         model = Task
         fields = [
             "id",
+            "user",
             "title",
             "description",
             "status_task",
@@ -51,3 +52,8 @@ class TaskSerializer(serializers.ModelSerializer):
                 f"Invalid status: {value}. Must be one of {allowed_statuses}."
             )
         return value
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        del data["user"]
+        return data
