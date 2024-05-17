@@ -121,6 +121,7 @@ To deploy the application to production using Docker-Compose, follow these steps
   - Duplicate username or email is not allowed.
   - Username can only contain letters, numbers and underscore.
   - Passwords have a minimum length of 6 characters.
+  - JWT access tokens have a lifetime of 7 days from last login and refresh tokens have a lifetiem for 14 days.
 
 - Task Management
   - Task status can only be any of the following: TO DO, IN PROGRESS, DONE.
