@@ -367,9 +367,6 @@ Content-Type: application/json
 
 ### Task Management
 
-
-Sure, here are the request examples for the Task views:
-
 #### 1. Create Task
 **URL:** `api/v1/tasks/`
 
