@@ -13,8 +13,6 @@ from taskmaster.utils import get_object_or_error
 class AsyncTaskNotificationConsumer(AsyncJsonWebsocketConsumer):
     async def connect(self):
         self.group_name = "task_stream"
-        self.user: UserModel = self.scope.get("user")
-        self.task_id = self.scope["url_route"]["kwargs"]["id"]
 
         await self.channel_layer.group_add(self.group_name, self.channel_name)
         await self.accept()

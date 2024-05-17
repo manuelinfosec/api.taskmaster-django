@@ -1,0 +1,299 @@
+{
+	"info": {
+		"_postman_id": "9898389c-22c4-4306-b4ac-7bb6b7d24388",
+		"name": "api.taskmaster",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31746674"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Profile",
+					"item": [
+						{
+							"name": "User Profile",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/auth/profile/",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"auth",
+										"profile",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update User Profile",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\": \"manuelinfosec\" \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/auth/profile/",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"auth",
+										"profile",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Change Password",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"old_password\": \"securepassword123()\",\r\n    \"new_password_1\": \"newsecurepassword123!!\",\r\n    \"new_password_2\": \"newsecurepassword123!!\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{URL}}/auth/profile/password/",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"auth",
+										"profile",
+										"password",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"first_name\": \"Chiemezie\",\r\n    \"last_name\": \"Njoku\",\r\n    \"username\": \"chiemezienjoku\",\r\n    \"email\": \"chiemezienjoku@example.com\",\r\n    \"password\": \"securepassword123()\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/auth/register/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"register",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"chiemezienjoku\",\r\n    \"password\": \"securepassword123()\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/auth/login/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Manage Tasks",
+			"item": [
+				{
+					"name": "Create Task",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Complete Backend Assessment\",\r\n    \"description\": \"Write and submit the project proposal\",\r\n    \"status_task\": \"TO DO\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/tasks/create/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"tasks",
+								"create",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Task",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/tasks/30fbebfb-cf52-46fc-a554-7f640987b925/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"tasks",
+								"30fbebfb-cf52-46fc-a554-7f640987b925",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Task",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Complete Backend Assessment\",\r\n    \"description\": \"Write and submit the project proposal\",\r\n    \"status_task\": \"DONE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/tasks/4870ffda-363c-4795-a15b-136d171f14c3/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"tasks",
+								"4870ffda-363c-4795-a15b-136d171f14c3",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Task",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/tasks/7476f615-a286-4b79-ac52-1b641358ef2b/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"tasks",
+								"7476f615-a286-4b79-ac52-1b641358ef2b",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Tasks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/tasks/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"tasks",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{TOKEN}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

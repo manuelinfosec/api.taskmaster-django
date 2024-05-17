@@ -18,7 +18,7 @@ urlpatterns = [
 
 ws_urlpatterns = [
     path(
-        "ws/task/<str:id>",
+        "ws/tasks/",
         AsyncTaskNotificationConsumer.as_asgi(),
         name="ws_task_notification",
     ),

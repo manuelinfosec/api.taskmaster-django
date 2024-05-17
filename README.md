@@ -1,5 +1,37 @@
+## Project Structure
+
+This project is organized to ensure a clean and maintainable codebase. The project uses both ASGI and WSGI applications to handle different parts of the application.
+
+### ASGI and WSGI Applications
+
+- **ASGI Application:** Used to handle the WebSocket part of the application, enabling real-time features such as task notifications.
+
+- **WSGI Application:** Used to handle the traditional HTTP requests for the CRUD endpoints and other standard web functionalities.
 
 
+### Components
+
+The project architecture follows a View-Service-Serializer-Model (VSSM) approach, promoting a separation of concerns and enhancing the maintainability and testability. Here's a brief explanation of each component:
+
+1. **View**
+    - Responsible for handling HTTP requests and returning HTTP responses.
+    - Inherits from Django’s `View` classes (e.g., `APIView`, `ViewSet`).
+
+2. **Service**
+    - Contains the business logic of the application.
+    - Decouples the business logic from the views, making it easier to test and maintain.
+
+3. **Serializer**
+    - Translates complex data types (e.g., querysets) into JSON and vice versa.
+    - Validates incoming data to ensure it meets the expected format.
+
+4. **Model**
+    - Defines the structure of the data in the application.
+    - Represents the database schema using Django’s ORM (Object-Relational Mapping).
+
+
+
+## API Documentation
 ### User Authentication
 #### 1. Register User
 
@@ -410,3 +442,36 @@ Authorization: Bearer <access_token>
     ]
 }
 ```
+
+### Websocket Streams
+#### 1. TaskCreate Stream
+
+**Stream URL:** `ws/tasks/`
+
+Real-time notifications when a new task is created.
+
+***Response Example:**
+```json
+{
+    "id": "4870ffda-363c-4795-a15b-136d171f14c3",
+    "title": "Complete Backend Assessment",
+    "description": "Write and submit the project proposal",
+    "status_task": "TO DO",
+    "date_created": "2024-05-17T01:40:11.499810+01:00",
+    "last_updated": "2024-05-17T01:40:11.499810+01:00"
+}
+```
+
+
+## Testing with Postman
+For the API endpoints, a Postman collection is available in the [`postman`](/postman/) directory of this project. This collection includes all the necessary endpoints for testing user registration, authentication, and task management.
+
+### WebSocket Request Setup in Postman
+Open Postman and go to the WebSocket tab.
+Enter the WebSocket URL:
+```
+ws://<server-address>/ws/tasks/
+```
+Connect to the WebSocket by clicking the "Connect" button. Below is a screen example:
+
+![Postman WebSocket Screenshot](/postman/image.png)
