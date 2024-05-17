@@ -1,6 +1,6 @@
 # api.taskmaster-django
 
-## Project objective
+## Project Objective
 ### Task 1: API Development
 Develop a RESTful API for a simple task management system with the following features:
 - User Authentication: Implement authentication using JWT tokens.
@@ -12,6 +12,7 @@ Develop a RESTful API for a simple task management system with the following fea
 ### Task 2: Documentation
 Document your API endpoints, data models, and any other relevant information necessary for understanding and using your code. Provide clear and concise documentation to aid future developers who may work with your code.
 
+### Task 3: Streaming
 Make sure to create a socket to stream the data created In real-time.
 
 ## Deployment
@@ -117,6 +118,7 @@ To deploy the application to production using Docker-Compose, follow these steps
 
 ## Validation and Constraints Implemented
 - User Authentication:
+  - Duplicate username or email is not allowed.
   - Username can only contain letters, numbers and underscore.
   - Passwords have a minimum length of 6 characters.
 
@@ -587,11 +589,11 @@ Real-time notifications when a new task is deleted.
 }
 ```
 
-
-## Testing with Postman
+## Testing
+### Testing with Postman
 For the API endpoints, a Postman collection is available in the [`postman`](/postman/) directory of this project. This collection includes all the necessary endpoints for testing user registration, authentication, and task management.
 
-### WebSocket Request Setup in Postman
+#### WebSocket Request Setup in Postman
 Open Postman and go to the WebSocket tab.
 Enter the WebSocket URL:
 ```
@@ -600,3 +602,41 @@ ws://<server-address>/ws/tasks/
 Connect to the WebSocket by clicking the "Connect" button. Below is a screen example:
 
 ![Postman WebSocket Screenshot](/postman/image.png)
+
+
+### Testing with Pytest
+
+### Testing with Postman
+For the API endpoints, a Postman collection is available in the [`postman`](/postman/) directory of this project. This collection includes all the necessary endpoints for testing user registration, authentication, and task management.
+
+### Testing with Pytest
+To ensure the proper functionality of the application, we use `pytest` for running our test suite located in the [`tests`](/tests/) directory. Follow the instructions below to set up and run the tests:
+
+1. **Install Dependencies**:
+   Make sure you have all dependencies installed by running:
+   ```sh
+   pip install -r requirements.txt
+   ```
+
+2. **Run the Tests**:
+   Execute the following command to run the tests:
+   ```sh
+   pytest
+   ```
+   This will discover and run all the tests in the project. 
+
+3. **Generate Coverage Report**:
+   To measure test coverage, run `pytest` with the coverage option:
+   ```sh
+   pytest --cov=taskmanager --cov=accounts
+   ```
+   This command will generate a coverage report indicating how much of your code is covered by tests.
+
+4. **View Detailed Coverage Report**:
+   To generate a detailed HTML report of the test coverage, use:
+   ```sh
+   pytest --cov=taskmanager --cov=accounts --cov-report=html
+   ```
+   The report will be available in the `htmlcov` directory. Open the `index.html` file in your browser to view the detailed report.
+
+By following these steps, you can ensure that your application is well-tested and reliable.
