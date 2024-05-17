@@ -4,13 +4,19 @@ from faker import Faker
 from pytest_factoryboy import register
 from rest_framework.test import APIClient
 
-from tests.factories import UserFactory
+from tests.factories import TaskFactory, UserFactory
 
 fake = Faker()
 
 
 # register factories
 register(UserFactory)
+register(TaskFactory)
+
+
+@pytest.fixture
+def task(user):
+    return TaskFactory.create(user=user)
 
 
 @pytest.fixture

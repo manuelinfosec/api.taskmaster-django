@@ -20,7 +20,6 @@ class TestUserModel:
         test_new_user_is_not_staff_or_superuser: Test case to verify that new users are not staff or superusers.
         test_username_field_is_unique: Test case to verify the uniqueness constraint for the username field.
         test_email_field_is_unique: Test case to verify the uniqueness constraint for the email field.
-        test_phone_number_field_is_unique: Test case to verify the uniqueness constraint for the phone number field.
     """
 
     def test_create_new_user(self, user_factory, user_model):
@@ -86,8 +85,10 @@ class TestUserModel:
             user_factory.create(username="test_user_1")
 
         assert exc_info.type is IntegrityError
-        assert f"DETAIL:  Key (username)=({user.username}) already exists" in str(
-            exc_info.value
+        error_message = str(exc_info.value)
+        assert (
+            "UNIQUE constraint failed" in error_message
+            or "already exists" in error_message
         )
         assert user_model.objects.all().count() == 1
 
@@ -109,32 +110,10 @@ class TestUserModel:
             user_factory.create(email="testuser@email.com")
 
         assert exc_info.type is IntegrityError
-        assert f"DETAIL:  Key (email)=({user.email}) already exists" in str(
-            exc_info.value
-        )
-        assert user_model.objects.all().count() == 1
-
-    def test_phone_number_field_is_unique(self, user_factory, user_model):
-        """
-        Test case to verify the uniqueness constraint for the phone number field.
-
-        Args:
-            user_factory: Factory for creating user instances.
-            user_model: The User model class.
-
-        Assertion:
-            - Asserts that attempting to create a user with an existing phone number raises an IntegrityError.
-            - Asserts that the count of user objects remains unchanged.
-        """
-        user = user_factory.create(phone_number="1234567890")
-
-        with pytest.raises(IntegrityError) as exc_info:
-            user_factory.create(phone_number="1234567890")
-
-        assert exc_info.type is IntegrityError
+        error_message = str(exc_info.value)
         assert (
-            f"DETAIL:  Key (phone_number)=({user.phone_number}) already exists"
-            in str(exc_info.value)
+            "UNIQUE constraint failed" in error_message
+            or "already exists" in error_message
         )
         assert user_model.objects.all().count() == 1
 

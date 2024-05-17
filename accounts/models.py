@@ -102,4 +102,4 @@ class User(AbstractUser, BaseModel):
         """
         Returns a string representation of the user object.
         """
-        return self.get_username()
+        return self.email

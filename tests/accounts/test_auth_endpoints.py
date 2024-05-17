@@ -25,8 +25,8 @@ class TestAuthEndpoints:
             "first_name": user.first_name,
             "last_name": user.last_name,
             "email": user.email,
-            "username": user.username,
-            "password": user.password,
+            "username": "testuser",
+            "password": "securepassword123",
         }
 
         # Send a POST request to register a new user
@@ -49,7 +49,7 @@ class TestAuthEndpoints:
         # Send a POST request to login with user credentials
         response = api_client().post(
             path=reverse("login_user"),
-            data={"username": user.username, "password": user.password},
+            data={"username": "testuser", "password": "securepassword123"},
             format="json",
         )
 
@@ -57,7 +57,7 @@ class TestAuthEndpoints:
         assert response.status_code == status.HTTP_200_OK
 
         # Check if the response contains user data
-        assert "tokens" in response.data
+        assert "token" in response.data
 
     def test_get_user_profile(self, api_client, user_factory):
         """Test retrieval of user profile."""

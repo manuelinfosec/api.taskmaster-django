@@ -5,6 +5,8 @@ import factory.fuzzy
 from django.contrib.auth import get_user_model
 from faker import Faker
 
+from taskmanager.models import Task
+
 
 fake = Faker()
 
@@ -54,3 +56,13 @@ class UserFactory(factory.django.DjangoModelFactory):
         obj.set_password(kwargs["password"])
         obj.save()
         return obj
+
+
+class TaskFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Task
+
+    user = factory.SubFactory(UserFactory)
+    title = factory.Faker("sentence", nb_words=4)
+    description = factory.Faker("paragraph")
+    status_task = "TO DO"

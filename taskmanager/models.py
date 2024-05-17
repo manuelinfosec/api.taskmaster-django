@@ -43,3 +43,6 @@ class Task(BaseModel):
     status_task = models.CharField(
         max_length=20, choices=TASK_STATUS, blank=True, default="TO DO"
     )
+
+    def __str__(self):
+        return self.title
