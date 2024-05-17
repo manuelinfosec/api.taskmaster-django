@@ -504,7 +504,7 @@ Authorization: Bearer <access_token>
 
 **Method:** `GET`
 
-Listing all tasks
+Listing all tasks (Paginated endpoint)
 
 **Request Example:**
 
