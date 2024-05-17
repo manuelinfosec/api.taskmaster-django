@@ -16,8 +16,10 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 # copy over deployment files
+COPY .docker/deployment/supervisord.conf /etc/supervisord.conf
 COPY .docker/deployment/gunicorn.conf /etc/supervisor/conf.d/gunicorn.conf
 COPY .docker/deployment/daphne.conf /etc/supervisor/conf.d/daphne.conf
+COPY .docker/deployment/celery.conf /etc/supervisor/conf.d/celery.conf
 
 COPY --chown=user:user . .
 
@@ -25,4 +27,4 @@ RUN chmod +x scripts/*
 
 FROM base as prod
 
-CMD [ "sh", "scripts/run_prod.sh" ]
+CMD [ "sh", "scripts/run_gunirorn.sh" ]
