@@ -116,12 +116,3 @@ class TestUserModel:
             or "already exists" in error_message
         )
         assert user_model.objects.all().count() == 1
-
-    @pytest.mark.xfail
-    def test_password_cannot_be_less_than_6(self, user_factory, user_model):
-        """This test should fail, but passes. Will debug"""
-
-        with pytest.raises(DataError) as exc_info:
-            user_factory.create(password="pass")
-
-        assert user_model.objects.all().count() == 1

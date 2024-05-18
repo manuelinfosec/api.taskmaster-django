@@ -168,19 +168,26 @@ class UserUpdatePasswordSerializer(serializers.Serializer):
         return {"detail": "password updated successfully"}
 
 
+from django.contrib.auth import authenticate
+from rest_framework import serializers, exceptions, status
+from django.utils import timezone
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
 class LoginSerializer(serializers.Serializer):
     """
     Serializer class for user login authentication.
 
     This serializer handles the validation and authentication of user login credentials.
-    It expects a username and password as input for authentication.
+    It expects a username or email and password as input for authentication.
 
     Attributes:
-        username: A CharField for the username.
+        username_or_email: A CharField for the username or email.
         password: A CharField for the password, with write-only access.
 
     Methods:
-        to_internal_value: Converts provided username and email values to lowercase.
+        to_internal_value: Converts provided username or email values to lowercase.
         create: Authenticates the user based on provided credentials and updates
                 the last login timestamp for the authenticated user.
 
@@ -188,21 +195,17 @@ class LoginSerializer(serializers.Serializer):
         NotAuthenticated: If user authentication fails due to invalid credentials.
     """
 
-    # Define fields for username and password
-    username = serializers.CharField()
+    # Define fields for username_or_email and password
+    username_or_email = serializers.CharField()
     password = serializers.CharField(
         write_only=True, min_length=6, style={"input_type": "password"}
     )
 
     def to_internal_value(self, data):
-        """Convert provided username and email values to lowercase."""
-        if data.get("username"):
-            # Convert username to lowercase if provided
-            data["username"] = data["username"].lower()
-
-        if data.get("email"):
-            # Convert email to lowercase if provided
-            data["email"] = data["email"].lower()
+        """Convert provided username or email values to lowercase."""
+        if data.get("username_or_email"):
+            # Convert username_or_email to lowercase if provided
+            data["username_or_email"] = data["username_or_email"].lower()
 
         return super().to_internal_value(data)
 
@@ -211,7 +214,7 @@ class LoginSerializer(serializers.Serializer):
         Authenticate the user based on provided credentials.
 
         Args:
-            validated_data: A dictionary containing validated username and password.
+            validated_data: A dictionary containing validated username_or_email and password.
 
         Returns:
             Authenticated user if successful.
@@ -220,8 +223,22 @@ class LoginSerializer(serializers.Serializer):
             NotAuthenticated: If user authentication fails due to invalid credentials.
         """
 
-        # Authenticate the user based on provided credentials
-        user = authenticate(**validated_data)
+        # Extract username_or_email and password from validated_data
+        username_or_email = validated_data.get("username_or_email")
+        password = validated_data.get("password")
+
+        # Check if username_or_email is an email
+        if '@' in username_or_email:
+            try:
+                user = User.objects.get(email=username_or_email)
+                username = user.username
+            except User.DoesNotExist:
+                username = None
+        else:
+            username = username_or_email
+ 
+        # Authenticate the user based on the username and password
+        user = authenticate(username=username, password=password)
 
         if not user:
             # Raise a NotAuthenticated exception if user authentication fails

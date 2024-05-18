@@ -38,6 +38,18 @@ class UserFactory(factory.django.DjangoModelFactory):
     username = factory.Sequence(lambda x: f"{fake.user_name()}_{x}")
     email = factory.Sequence(lambda x: f"{fake.user_name()}_{x}@email.com")
     password = fake.password(length=8)
+    # password = factory.PostGenerationMethodCall("set_password", "defaultpassword")
+
+    # plain_password = "defaultpassword"  # Store the plain password for testing
+
+    # @factory.post_generation
+    # def store_plain_password(self, create, extracted, **kwargs):
+    #     if not create:
+    #         # Skip plain password storage if the object is not being created
+    #         return
+
+    #     # This is just to store the plain password for testing purposes
+    #     self.plain_password = "defaultpassword"
 
     @classmethod
     def _create(cls, model_class, *args, **kwargs):

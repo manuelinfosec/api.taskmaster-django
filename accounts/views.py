@@ -3,6 +3,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import generics, status
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
 
 from accounts.services import AuthService
 from taskmaster.permissions import IsAuthenticated, IsObjectOwner
@@ -17,6 +18,9 @@ class RegisterAPI(generics.GenericAPIView):
 
     URL: /auth/register/
     """
+
+    # Set permission_classes to AllowAny to ignore authorization headers
+    permission_classes = [AllowAny]
 
     def post(self, request):
         """
@@ -45,6 +49,9 @@ class LoginAPI(generics.GenericAPIView):
     URL: /auth/login/
     """
 
+    # Set permission_classes to AllowAny to ignore authorization headers
+    permission_classes = [AllowAny]
+
     def post(self, request):
         """
         Accepts POST requests with user credentials (username and password).
@@ -54,7 +61,7 @@ class LoginAPI(generics.GenericAPIView):
         """
         return Response(
             data=auth_service.login_user(
-                username=request.data.get("username"),
+                username=request.data.get("username") or request.data.get("email"),
                 password=request.data.get("password"),
             ),
             status=status.HTTP_200_OK,

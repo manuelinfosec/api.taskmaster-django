@@ -2,6 +2,7 @@
 
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.core.exceptions import ValidationError
 
 from taskmaster.utils import BaseModel
 
@@ -36,7 +37,7 @@ class Task(BaseModel):
     TASK_STATUS = (("TO DO", "TO DO"), ("IN PROGRESS", "IN PROGRESS"), ("DONE", "DONE"))
 
     user = models.ForeignKey(
-        get_user_model(), related_name="users", on_delete=models.SET_NULL, null=True
+        get_user_model(), related_name="users", on_delete=models.CASCADE, null=True
     )
     title = models.CharField(max_length=100)
     description = models.TextField(blank=True)
@@ -44,5 +45,10 @@ class Task(BaseModel):
         max_length=20, choices=TASK_STATUS, blank=True, default="TO DO"
     )
 
-    def __str__(self):
+    def save(self, *args, **kwargs):
+        if self.status_task not in dict(self.TASK_STATUS):
+            raise ValidationError(f"{self.status_task} is not a valid status.")
+        super().save(*args, **kwargs)
+
+    def __str__(self) -> str:
         return self.title

@@ -15,7 +15,8 @@ register(TaskFactory)
 
 
 @pytest.fixture
-def task(user):
+def task(created_user):
+    user, _ = created_user
     return TaskFactory.create(user=user)
 
 
@@ -27,7 +28,7 @@ def api_client():
     Returns:
         APIClient: Instance of the Django REST Framework API client.
     """
-    return APIClient
+    return APIClient()
 
 
 @pytest.fixture

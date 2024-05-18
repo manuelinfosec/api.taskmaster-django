@@ -89,7 +89,7 @@ class AuthService:
             dict: User data along with generated authentication tokens.
 
         """
-        serializer = LoginSerializer(data={"username": username, "password": password})
+        serializer = LoginSerializer(data={"username_or_email": username, "password": password})
 
         serializer.is_valid(raise_exception=True)
         serializer.save()

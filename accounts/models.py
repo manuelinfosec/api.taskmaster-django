@@ -78,8 +78,8 @@ class User(AbstractUser, BaseModel):
             validators.MinLengthValidator(limit_value=6),
         ],
     )
-    # USERNAME_FIELD = "email"
-    # REQUIRED_FIELDS = ["username"]
+    USERNAME_FIELD = "email"
+    REQUIRED_FIELDS = ["username"]
 
     class Meta:
         ordering = ["-date_joined"]

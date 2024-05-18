@@ -609,12 +609,6 @@ Connect to the WebSocket by clicking the "Connect" button. Below is a screen exa
 
 ![Postman WebSocket Screenshot](/postman/image.png)
 
-
-### Testing with Pytest
-
-### Testing with Postman
-For the API endpoints, a Postman collection is available in the [`postman`](/postman/) directory of this project. This collection includes all the necessary endpoints for testing user registration, authentication, and task management.
-
 ### Testing with Pytest
 To ensure the proper functionality of the application, we use `pytest` for running our test suite located in the [`tests`](/tests/) directory. Follow the instructions below to set up and run the tests:
 
@@ -644,6 +638,39 @@ To ensure the proper functionality of the application, we use `pytest` for runni
    pytest --cov=taskmanager --cov=accounts --cov-report=html
    ```
    The report will be available in the `htmlcov` directory. Open the `index.html` file in your browser to view the detailed report.
+
+**Pytest Output**
+```
+collected 20 items
+
+tests/taskmanager/test_task_models.py::TestTaskModel::test_create_task Creating test database for alias 'default'...
+PASSED
+tests/taskmanager/test_task_models.py::TestTaskModel::test_task_string_representation PASSED
+tests/taskmanager/test_task_models.py::TestTaskModel::test_task_status_choices PASSED
+tests/taskmanager/test_task_models.py::TestTaskModel::test_update_task PASSED
+tests/taskmanager/test_task_models.py::TestTaskModel::test_delete_task PASSED
+tests/taskmanager/test_task_models.py::TestTaskModel::test_task_default_status PASSED
+tests/accounts/test_auth_endpoints.py::TestAuthEndpoints::test_register_user PASSED
+tests/accounts/test_auth_endpoints.py::TestAuthEndpoints::test_login_user PASSED
+tests/accounts/test_auth_endpoints.py::TestAuthEndpoints::test_get_user_profile PASSED
+tests/accounts/test_auth_endpoints.py::TestAuthEndpoints::test_update_user_profile PASSED
+tests/accounts/test_auth_endpoints.py::TestAuthEndpoints::test_update_user_password PASSED
+tests/accounts/test_user_model.py::TestUserModel::test_create_new_user PASSED
+tests/accounts/test_user_model.py::TestUserModel::test_model_str_method PASSED
+tests/accounts/test_user_model.py::TestUserModel::test_new_user_is_not_superuser PASSED
+tests/accounts/test_user_model.py::TestUserModel::test_username_field_is_unique PASSED
+tests/accounts/test_user_model.py::TestUserModel::test_email_field_is_unique PASSED
+tests/taskmanager/test_task_endpoints.py::TestTaskEndpoints::test_retrieve_task PASSED
+tests/taskmanager/test_task_endpoints.py::TestTaskEndpoints::test_update_task PASSED
+tests/taskmanager/test_task_endpoints.py::TestTaskEndpoints::test_delete_task PASSED
+tests/taskmanager/test_task_endpoints.py::TestTaskEndpoints::test_list_tasks PASSED
+Destroying test database for alias 'default'...
+
+=========================================== 20 passed, 1 warning in 12.64s ============================================
+```
+
+#### Additional Information
+- Every input parameter for each test case is a fixture from the `tests/factories` directory.
 
 ## Issues Encountered
 
